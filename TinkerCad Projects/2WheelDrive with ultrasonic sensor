@@ -1,0 +1,62 @@
+// C++ code
+//
+int in1 = 4;
+int in2 = 5;
+int enL = 10;
+int enR = 11;
+int in3 = 3;
+int in4 = 2;
+int trig = 13;
+int echo = 12;
+int duration ;
+int distance ;
+void setup()
+{
+  pinMode(in1,OUTPUT);
+  pinMode(in2,OUTPUT);
+  pinMode(in3,OUTPUT);
+  pinMode(in4,OUTPUT);
+  pinMode(enL,OUTPUT);
+  pinMode(enR,OUTPUT);
+  pinMode(trig,OUTPUT);
+  pinMode(echo,INPUT);
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+  Serial.begin(9600);  
+}
+
+void loop()
+{
+  digitalWrite(trig, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig, HIGH);
+  delayMicroseconds(10); 
+  digitalWrite(trig, LOW);
+  delayMicroseconds(2);
+  duration = pulseIn(echo,HIGH);
+  distance = duration * 0.0343/2;
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.print("\n");
+  delay(1000);
+  digitalWrite(enL,HIGH);
+  digitalWrite(enR,HIGH);
+  if(distance>20&&distance<=95){
+  digitalWrite(in1,HIGH );
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+  }else if(distance>185&&distance<=300){
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  } else{
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+  }
+}
