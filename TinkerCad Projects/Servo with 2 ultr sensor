@@ -1,0 +1,84 @@
+// C++ code
+//
+#include<Servo.h>
+Servo s;
+int trig1 =4;
+int echo1 =3;
+int trig2 =7;
+int echo2=6;
+int S1 = 2;
+int dis1;
+int dis2;
+long dur1;
+long dur2;
+int serv=9;
+int targetAngle;
+int initialAngle=0;
+void setup()
+{
+  s.attach(serv);
+  pinMode(S1, INPUT_PULLUP);
+  pinMode(trig1, OUTPUT);
+  pinMode(trig2,OUTPUT);
+  pinMode(echo1,INPUT);
+  pinMode(echo2, INPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{ 
+  
+  int switchState = digitalRead(S1);
+  //U1
+  digitalWrite(trig1, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig1, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig1, LOW);
+  delayMicroseconds(2);
+  dur1= pulseIn(echo1,HIGH);
+  dis1 = dur1 * 0.0343 /2;
+  Serial.println(dis1);
+  //init pos
+  if (dis1 < 200) {
+    initialAngle = 0;
+  } else {
+    initialAngle = 180;
+  }
+	s.write(initialAngle);
+  delay(500);
+  // U2
+  digitalWrite(trig2, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig2, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig2, LOW);
+  delayMicroseconds(2);
+  dur2= pulseIn(echo2,HIGH);
+  dis2 = dur2 * 0.0343 /2;
+  int speed = map(dis2,20,350,2,50);
+  
+  if (switchState == HIGH) {
+    if (initialAngle == 0){
+      targetAngle = 180;}
+    else { targetAngle = 0;}
+     for (int i = initialAngle;i <= targetAngle; i++) {
+        s.write(i);
+        delay(speed);
+      }
+    if (initialAngle < targetAngle) {
+      for (int i = initialAngle; i<= targetAngle; i++) {
+        s.write(i);
+        delay(speed);
+      }
+    } else {
+      for (int i = initialAngle; i >= targetAngle; i--) {
+        s.write(i);
+        delay(speed);
+      }
+    }
+  }
+  
+ 
+  
+}
