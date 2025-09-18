@@ -1,0 +1,35 @@
+// C++ code
+//
+int led1 =4;
+int led2 =5;
+int but1=2;
+int but2=3;
+int but1State=0;
+int but2State=0;
+void setup()
+{
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(but1, INPUT_PULLUP);
+  pinMode(but2, INPUT_PULLUP);
+  digitalWrite(led1, LOW);
+  digitalWrite(led2, LOW);
+}
+
+void loop()
+{
+  but1State= digitalRead(but1);
+  but2State= digitalRead(but2);
+  if(but1State==HIGH&&but2State==LOW){
+  	digitalWrite(led1, HIGH);
+  	digitalWrite(led2, LOW);
+  } 
+  else if(but1State==LOW&&but2State==HIGH){
+      digitalWrite(led1, LOW);
+  	  digitalWrite(led2, HIGH);
+  } else{
+      digitalWrite(led1, LOW);
+  	  digitalWrite(led2, LOW);
+  }
+  
+}
