@@ -1,0 +1,41 @@
+// C++ code
+
+int Fbut=12;
+int Lbut=11;
+int Bbut=3;
+int Rbut=2;
+void setup()
+{
+  pinMode(Fbut, INPUT);
+  pinMode(Bbut, INPUT);
+  pinMode(Lbut, INPUT);
+  pinMode(Rbut, INPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+
+  int FbutState=digitalRead(Fbut);
+  int BbutState=digitalRead(Bbut);
+  int LbutState=digitalRead(Lbut);
+  int RbutState=digitalRead(Rbut);
+  
+  if(FbutState==HIGH){
+    Serial.write('F');
+    delay(200);
+  }else if(BbutState==HIGH){
+    Serial.write('B');
+    delay(200);
+  }else if(RbutState==HIGH){
+    Serial.write('R');
+    delay(200);
+  }else if(LbutState==HIGH){
+    Serial.write('L');
+    delay(200);
+  }else{
+    Serial.write('H');
+    delay(200);
+  }
+  
+}
