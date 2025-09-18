@@ -1,0 +1,41 @@
+// C++ code
+//
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C Display(0x20, 16, 2);
+int in4 = 7;
+int in3 =8;
+int en3_4 = 3;
+int potpin = A3;
+  
+void setup()
+{
+
+  pinMode(in4, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(en3_4, OUTPUT);
+  pinMode(potpin,INPUT);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4,LOW);
+  digitalWrite(en3_4, LOW);
+  Display.init();
+  Display.backlight();
+  Display.clear();  
+  
+}
+
+void loop()
+{
+  int potval= analogRead(potpin);
+  int speed = map(potval,1023,0,0,255);
+  Display.setCursor(0, 0);
+  Display.print("Speed: ");
+  delay(100);
+  Display.setCursor(0, 1);
+  Display.print(speed);
+  delay(100);
+  Display.clear();
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  analogWrite(en3_4, speed);
+  
+}
