@@ -1,0 +1,39 @@
+// C++ code
+#include <Servo.h>
+Servo s1,s2;
+int pot= A5;
+int trig =8;
+int echo = 9;
+int distance;
+int duration;
+void setup()
+{
+  pinMode(pot,INPUT);
+  pinMode(trig,OUTPUT);
+  pinMode(echo,INPUT);
+	s1.attach(5);
+  	s1.write(0);
+  	s2.attach(3);
+    s2.write(0);
+}
+void loop()
+{
+  digitalWrite(trig, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig, LOW);
+  delayMicroseconds(2);
+  duration = pulseIn(echo,HIGH);
+  distance = duration * 0.0343 /2;
+  int angle1=map(distance,20,330,0,180);
+  s1.write(angle1);
+  
+  int potval = analogRead(pot);
+  int angle2=map(potval,1023,0,0,180);
+  s2.write(angle2);
+  
+  
+ 
+ 
+}
