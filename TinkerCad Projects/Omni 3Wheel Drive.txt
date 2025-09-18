@@ -1,0 +1,128 @@
+// C++ code
+//
+int fin1=2;
+int fin2=3;
+int enF=5;
+int rin1=11;
+int rin2=12;
+int enR=6;
+int lin1=7;
+int lin2=8;
+int enL=10;
+int potPin=A5;
+char ch;
+void setup()
+{
+  pinMode(fin1, OUTPUT);
+  pinMode(fin2, OUTPUT);
+  pinMode(enF, OUTPUT);
+  pinMode(rin1, OUTPUT);
+  pinMode(rin2, OUTPUT);
+  pinMode(enR, OUTPUT);
+  pinMode(lin1, OUTPUT);
+  pinMode(lin2, OUTPUT);
+  pinMode(enL, OUTPUT);
+  digitalWrite(fin1, LOW);
+  digitalWrite(fin2, LOW);
+  digitalWrite(lin1, LOW);
+  digitalWrite(lin2, LOW);
+  digitalWrite(rin1, LOW);
+  digitalWrite(rin2, LOW);
+  digitalWrite(enF, LOW);
+  digitalWrite(enL, LOW);
+  digitalWrite(enR, LOW);
+  Serial.begin(9600);
+  Serial.print("Enter controls:\n1.'F' for Forward\n2.'B' for Backward\n3.'L' for Left\n4.'R' for Right\n5.'C' for Cloclwise\n6.'A' for AntiClockwise\n");
+}
+
+void loop()
+{
+  int potval=analogRead(potPin);
+  int speed = map(potval,1023,0,0,255);
+  if (Serial.available()){
+     ch= Serial.read();
+    Serial.print("Moving: ");
+    Serial.println(ch);
+  }
+  switch(ch){
+    
+    case 'F':
+    digitalWrite(rin1, HIGH);
+    digitalWrite(rin2, LOW);
+    digitalWrite(lin1, LOW);
+    digitalWrite(lin2, HIGH);
+    digitalWrite(enF, LOW);
+    analogWrite(enL,speed);
+    analogWrite(enR, speed);
+    break;
+    case 'B':
+    digitalWrite(rin1, LOW);
+    digitalWrite(rin2, HIGH);
+    digitalWrite(lin1, HIGH);
+    digitalWrite(lin2, LOW);
+    digitalWrite(enF, LOW);
+    analogWrite(enL,speed);
+    analogWrite(enR, speed);
+    break; 
+    case 'L':
+    digitalWrite(rin1, HIGH);
+    digitalWrite(rin2, LOW);
+    digitalWrite(lin1, LOW);
+    digitalWrite(lin2, HIGH);
+    digitalWrite(fin1, HIGH);
+    digitalWrite(fin2, LOW);
+    analogWrite(enF, speed);
+    analogWrite(enL,speed);
+    analogWrite(enR, speed);
+    break;
+    case 'R':
+    
+    digitalWrite(rin1, LOW);
+    digitalWrite(rin2, HIGH);
+    digitalWrite(lin1, HIGH);
+    digitalWrite(lin2, LOW);
+    digitalWrite(fin1, LOW);
+    digitalWrite(fin2, HIGH);
+    analogWrite(enF, speed);
+    analogWrite(enL,speed);
+    analogWrite(enR, speed);
+    break;
+    case 'C':
+    digitalWrite(rin1, LOW);
+    digitalWrite(rin2, HIGH);
+    digitalWrite(lin1, LOW);
+    digitalWrite(lin2, HIGH);
+    digitalWrite(fin1, LOW);
+    digitalWrite(fin2, HIGH);
+    analogWrite(enF, speed);
+    analogWrite(enL,speed);
+    analogWrite(enR, speed);
+    break;
+    case 'A':
+    digitalWrite(rin1, HIGH);
+    digitalWrite(rin2, LOW);
+    digitalWrite(lin1, HIGH);
+    digitalWrite(lin2, LOW);
+    digitalWrite(fin1, HIGH);
+    digitalWrite(fin2, LOW);
+    analogWrite(enF, speed);
+    analogWrite(enL,speed);
+    analogWrite(enR, speed);
+    break;
+    default:
+	digitalWrite(rin1, LOW);
+	digitalWrite(rin2, LOW);
+	digitalWrite(lin1, LOW);
+	digitalWrite(lin2, LOW);
+	digitalWrite(fin1, LOW);
+	digitalWrite(fin2, LOW);
+	analogWrite(enF, 0);
+	analogWrite(enL, 0);
+	analogWrite(enR, 0);
+	break;
+  }
+  
+  
+  
+  
+}
