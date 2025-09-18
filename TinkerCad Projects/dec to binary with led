@@ -1,0 +1,45 @@
+int ledpin[]={11,10,9,8,7,6,5,4,3,2}; 
+int lednum=10; // taking 10 leds so as to output upto 1000(10 bit)
+void setup()
+{
+  for(int i=0;i<lednum;i++){
+  pinMode(ledpin[i], OUTPUT);
+    digitalWrite(ledpin[i], LOW); // turning all led off initially
+  }
+  Serial.begin(9600); // Initialising serial communication (9600 bits per sec)
+  Serial.print("Enter an integer between 0 and 1000: ");
+  
+}
+
+void loop()
+{
+  if (Serial.available() > 0) {
+    int num = Serial.parseInt(); 
+    // Checking serial monitor if user has enterd the input value
+    while(Serial.available() > 0) {
+      Serial.read();
+    }
+    
+    
+    if(num >= 0 && num <= 1000) { // checking if num is in range
+      
+      for(int i = 0; i < lednum; i++) {
+        digitalWrite(ledpin[i], bitRead(num, i)); 
+      // bitRead tells us if the i-th binary dig is 0 or 1
+      // bitRead(decimal_value,position)  
+      //So we are seting the req. pos. of led HIGH and LOW i.e 1 and 0
+      }
+      
+      // Display results
+      Serial.print("Decimal: ");
+      Serial.println(num);
+      Serial.print("Binary:  ");
+      for(int i = lednum-1; i >= 0; i--) {
+        Serial.print(bitRead(num, i));  // printing the result to serial monitor
+      }
+      Serial.println();
+    }
+      
+      
+    } 
+  }
