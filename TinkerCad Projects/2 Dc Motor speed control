@@ -1,0 +1,39 @@
+// C++ code
+//
+int in1 = 2;
+int in2 = 12;
+int in4 = 7;
+int in3 =8;
+int en3_4 = 3;
+int en1_2 = 5;
+int potpin = A5;
+  
+void setup()
+{
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(en1_2, OUTPUT);
+  pinMode(in4, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(en3_4, OUTPUT);
+  pinMode(potpin,INPUT);
+  digitalWrite(in1, LOW);
+  digitalWrite(in2,LOW);
+  digitalWrite(en1_2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4,LOW);
+  digitalWrite(en3_4, LOW);
+}
+
+void loop()
+{
+  int potval= analogRead(potpin);
+  int speed = map(potval,1023,0,0,255);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  analogWrite(en3_4, speed);
+    digitalWrite(in2, HIGH);
+  digitalWrite(in1, LOW);
+  analogWrite(en1_2, speed);
+  
+}
