@@ -1,0 +1,55 @@
+// C++ code
+//Declaring pins
+int led1 = 3;
+int led2 = 4;
+int led3 = 5;
+int trigPin = 10;
+int echoPin = 9;
+int distance;
+int duration;
+int dis;
+void setup()
+{
+  pinMode(trigPin,OUTPUT);
+  pinMode(echoPin,INPUT);
+  pinMode(led1,OUTPUT);
+  pinMode(led2,OUTPUT);
+  pinMode(led3,OUTPUT);
+  // setting initial state of leds low
+  digitalWrite(led1, LOW);
+  digitalWrite(led2, LOW);
+  digitalWrite(led3, LOW);
+  Serial.begin(9600); 
+}
+
+void loop()
+{
+  
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  duration = pulseIn(echoPin,HIGH); // calculates the duration of echoPin High
+  distance = duration * 0.034/2;
+  Serial.print("Distance: ");
+  Serial.println(distance);
+  if(distance>250){
+  digitalWrite(led1, LOW);
+  digitalWrite(led2, LOW);
+  digitalWrite(led3, LOW);    
+  } else if(distance>175){
+  digitalWrite(led1, HIGH);
+  digitalWrite(led2, LOW);
+  digitalWrite(led3, LOW); 
+  }else if(distance>100){
+  digitalWrite(led1, HIGH);
+  digitalWrite(led2, HIGH);
+  digitalWrite(led3, LOW); 
+  }else{
+  digitalWrite(led1, HIGH);
+  digitalWrite(led2, HIGH);
+  digitalWrite(led3, HIGH); 
+  }
+}
